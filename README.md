@@ -1,4 +1,4 @@
-PhpGedcom-Sqlite
+php-gedcom-sqlite
 ================
 
 Sqlite Caching for the https://github.com/mrkrstphr/php-gedcom library
