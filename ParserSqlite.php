@@ -46,6 +46,7 @@ class ParserSqlite extends \PhpGedcom\Parser
                 // And instead of being Gedcoms, we were GedcomSqlites
                 $this->_gedcom = $gedcomCache;
             }else{
+                $this->_gedcom = new \PhpGedcom\Gedcom();
                 return parent::parse($fileName);
             }
         }
@@ -168,6 +169,11 @@ class ParserSqlite extends \PhpGedcom\Parser
         // Preparing has to happen after the table is created!
         $this->defaultGet = $this->_cache->prepare("SELECT data FROM cache WHERE zeroobj IS NULL AND type = :type");
         $this->cacheCount = $this->_cache->prepare("SELECT COUNT(*) AS count FROM cache");
+
+        // Couldn't prepare statements!
+        if(!$this->defaultGet || !$this->cacheCount){
+            return FALSE;
+        }
 
         if($clear){
             if(!$this->clearCache()){
